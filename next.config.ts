@@ -3,7 +3,7 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   /* config options here */
   images: {
-    domains: ["example.com", "www.impawards.com"],
+    domains: ["example.com", "www.impawards.com", "image.tmdb.org"],
     // You can add more domains if needed:
     // domains: ['example.com', 'another-domain.com', 'one-more-domain.com'],
 

@@ -3,22 +3,9 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import {
-  Star,
-  Clock,
-  Search,
-  X,
-  Filter,
-  ChevronDown,
-  Check,
-  Sliders,
-} from "lucide-react";
+import { Star, Clock, Search, X, Sliders } from "lucide-react";
 import { Slider } from "@/components/ui/slider";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+
 import { Checkbox } from "@/components/ui/checkbox";
 
 interface Film {
