@@ -17,20 +17,39 @@ export type User = {
   purchaseCount: number;
 };
 
-export type Activity = {
+export interface Activity {
   id: string;
   user: string;
   action: string;
-  item: string;
+  item?: string;
+  seatNumber?: number;
   time: string;
-};
+  date: Date;
+}
 
-export type ChartDataPoint = {
+export interface ChartDataPoint {
   value: number;
   day: string;
-};
+  rawValue?: string | number;
+}
 
-export type StatsCardProps = {
+export interface RevenueDataPoint {
+  day: string;
+  value: number;
+  reservations: number;
+  date: string;
+}
+
+export interface TopFilm {
+  _id: string;
+  name: string;
+  reservationCount: number;
+  totalSeats: number;
+  occupancyRate: string;
+  img?: string;
+}
+
+export interface StatsCardProps {
   title: string;
   value: string;
   trend: string;
@@ -38,4 +57,4 @@ export type StatsCardProps = {
   icon: React.ReactNode;
   iconColor: string;
   bgColor: string;
-};
+}
