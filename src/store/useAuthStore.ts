@@ -6,7 +6,9 @@ interface User {
   id: string;
   email: string;
   name?: string;
+  avatar?: string;
   isAdmin: boolean;
+  role?: string; // Added role property to match the check in navbar
 }
 
 interface AuthState {
@@ -17,6 +19,7 @@ interface AuthState {
   logout: () => void;
   isAdmin: () => boolean;
   setIsAuthenticated: (value: boolean) => void;
+  updateUserAvatar: (avatarUrl: string) => void; // New function to update avatar
 }
 
 export const useAuthStore = create<AuthState>()(
@@ -26,7 +29,13 @@ export const useAuthStore = create<AuthState>()(
       token: null,
       isAuthenticated: false,
       login: (user, token) => {
-        set({ user, token, isAuthenticated: true });
+        // Ensure user has role property based on isAdmin
+        const updatedUser = {
+          ...user,
+          role: user.isAdmin ? "admin" : "user",
+        };
+
+        set({ user: updatedUser, token, isAuthenticated: true });
         Cookies.set(
           "auth-storage",
           encodeURIComponent(
@@ -34,6 +43,7 @@ export const useAuthStore = create<AuthState>()(
               state: {
                 isAdmin: user.isAdmin,
                 isAuthenticated: true,
+                avatar: user.avatar,
                 token,
               },
             })
@@ -47,12 +57,41 @@ export const useAuthStore = create<AuthState>()(
       },
       isAdmin: () => get().user?.isAdmin || false,
       setIsAuthenticated: (value) => set({ isAuthenticated: value }),
+
+      // New function to update avatar URL
+      updateUserAvatar: (avatarUrl: string) => {
+        const currentUser = get().user;
+        if (currentUser) {
+          const updatedUser = { ...currentUser, avatar: avatarUrl };
+          set({ user: updatedUser });
+
+          // Update in cookies as well
+          const token = get().token;
+          if (token) {
+            Cookies.set(
+              "auth-storage",
+              encodeURIComponent(
+                JSON.stringify({
+                  state: {
+                    isAdmin: currentUser.isAdmin,
+                    isAuthenticated: true,
+                    avatar: avatarUrl,
+                    token,
+                  },
+                })
+              ),
+              { expires: 7 }
+            );
+          }
+        }
+      },
     }),
     {
       name: "auth-storage",
       partialize: (state) => ({
         user: state.user,
         token: state.token,
+        avatar: state.avatar,
         isAuthenticated: state.isAuthenticated,
       }),
     }
@@ -63,3 +102,5 @@ export const useIsAuthenticated = () =>
   useAuthStore((state) => state.isAuthenticated);
 export const useUser = () => useAuthStore((state) => state.user);
 export const useIsAdmin = () => useAuthStore((state) => state.isAdmin());
+export const useUpdateAvatar = () =>
+  useAuthStore((state) => state.updateUserAvatar);

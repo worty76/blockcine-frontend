@@ -73,6 +73,7 @@ export default function Login() {
             id: data.userId,
             email: email,
             isAdmin: data.isAdmin || false,
+            avatar: data.avatar || "",
             // Include name if available in the response
             ...(data.name && { name: data.name }),
           },

@@ -50,9 +50,13 @@ export function middleware(request: NextRequest) {
     }
   }
 
-  // Redirect admin users to dashboard from any public page
-  if (isAdmin && isPublicPath && pathname !== "/dashboard") {
-    console.log("Redirecting admin to dashboard from public page");
+  // Only redirect admin users from login and register pages, not from homepage
+  if (
+    isAdmin &&
+    isAuthenticated &&
+    (pathname === "/login" || pathname === "/register")
+  ) {
+    console.log("Redirecting admin from auth page to dashboard");
     return NextResponse.redirect(new URL("/dashboard", request.url));
   }
 
@@ -69,7 +73,7 @@ export function middleware(request: NextRequest) {
   }
 
   // Redirect authenticated users away from login page
-  if (isAuthenticated && isPublicPath && pathname === "/login") {
+  if (isAuthenticated && pathname === "/login") {
     const redirectUrl = isAdmin ? "/dashboard" : "/";
     console.log(`Redirecting authenticated user from login to: ${redirectUrl}`);
     return NextResponse.redirect(new URL(redirectUrl, request.url));
