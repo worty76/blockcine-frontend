@@ -5,7 +5,7 @@ import { useAuthStore } from "@/store/useAuthStore";
 import { Button } from "./button";
 import { useRouter } from "next/navigation";
 import { WalletConnect } from "./wallet-connect";
-import { User, LogOut, ChevronDown, Wallet, Ticket } from "lucide-react";
+import { User, LogOut, ChevronDown, LayoutDashboard } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,6 +13,7 @@ import {
   DropdownMenuTrigger,
 } from "./dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "./avatar";
+import { getAvatarUrl, getInitials } from "@/utils/avatar";
 
 export function Navbar() {
   const router = useRouter();
@@ -20,19 +21,16 @@ export function Navbar() {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
   const logout = useAuthStore((state) => state.logout);
 
+  // Check if user is admin
+  const isAdmin = user?.role === "admin";
+
   const handleLogout = () => {
     logout();
     router.push("/login");
   };
 
-  const getInitials = (name: string | undefined) => {
-    if (!name) return "U";
-    return name
-      .split(" ")
-      .map((n) => n[0])
-      .join("")
-      .toUpperCase();
-  };
+  // Use the utility function for avatar URL
+  const avatarUrl = getAvatarUrl(user);
 
   return (
     <nav className="relative bg-[#0A0A10] z-10">
@@ -113,10 +111,7 @@ export function Navbar() {
                   className="text-gray-300 hover:text-white bg-[#1A171E] hover:bg-[#252330] border border-gray-800"
                 >
                   <Avatar className="h-6 w-6 mr-2">
-                    <AvatarImage
-                      src={user?.avatar || ""}
-                      alt={user?.name || "User"}
-                    />
+                    <AvatarImage src={avatarUrl} alt={user?.name || "User"} />
                     <AvatarFallback className="bg-purple-900 text-xs">
                       {getInitials(user?.name)}
                     </AvatarFallback>
@@ -133,6 +128,14 @@ export function Navbar() {
                 align="end"
                 className="w-56 bg-[#1A171E] border border-gray-800 text-gray-300"
               >
+                {isAdmin && (
+                  <Link href="/admin/dashboard">
+                    <DropdownMenuItem className="hover:bg-purple-900/20 hover:text-white cursor-pointer">
+                      <LayoutDashboard className="h-4 w-4 mr-2" />
+                      Dashboard
+                    </DropdownMenuItem>
+                  </Link>
+                )}
                 <Link href="/me/profile">
                   <DropdownMenuItem className="hover:bg-purple-900/20 hover:text-white cursor-pointer">
                     <User className="h-4 w-4 mr-2" />

@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
-import { Navbar } from "@/components/ui/navbar";
 import { ToastProvider } from "@/providers/toast-provider";
+import NavbarWrapper from "@/components/ui/navbar-wrapper";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,8 +20,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} bg-[#0A0A10] text-black`}>
-        <Navbar />
-        <main className="min-h-screen bg-gradient-to-b from-[#0A0A10] to-[#121218]">
+        <NavbarWrapper />
+        <main className="min-h  -screen bg-gradient-to-b from-[#0A0A10] to-[#121218]">
           {children}
         </main>
         <Toaster />
