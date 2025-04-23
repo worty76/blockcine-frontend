@@ -69,42 +69,12 @@ export default function Sidebar({ isOpen, toggleSidebar }: SidebarProps) {
           <Button
             variant="ghost"
             className="w-full justify-start text-gray-400 hover:text-white hover:bg-white/10"
+            onClick={() => router.push("/dashboard/users")}
           >
             <Users className="mr-2 h-4 w-4" />
             Users
           </Button>
-          <Button
-            variant="ghost"
-            className="w-full justify-start text-gray-400 hover:text-white hover:bg-white/10"
-          >
-            <Ticket className="mr-2 h-4 w-4" />
-            Bookings
-          </Button>
-          <Button
-            variant="ghost"
-            className="w-full justify-start text-gray-400 hover:text-white hover:bg-white/10"
-          >
-            <Activity className="mr-2 h-4 w-4" />
-            Analytics
-          </Button>
-          <Button
-            variant="ghost"
-            className="w-full justify-start text-gray-400 hover:text-white hover:bg-white/10"
-          >
-            <Settings className="mr-2 h-4 w-4" />
-            Settings
-          </Button>
         </nav>
-        <div className="mt-10 px-4 pt-6 border-t border-gray-800">
-          <Button
-            variant="ghost"
-            className="w-full justify-start text-red-400 hover:text-red-300 hover:bg-white/10"
-            onClick={handleLogout}
-          >
-            <LogOut className="mr-2 h-4 w-4" />
-            Logout
-          </Button>
-        </div>
       </div>
     </aside>
   );

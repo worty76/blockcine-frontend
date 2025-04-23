@@ -129,7 +129,7 @@ export function Navbar() {
                 className="w-56 bg-[#1A171E] border border-gray-800 text-gray-300"
               >
                 {isAdmin && (
-                  <Link href="/admin/dashboard">
+                  <Link href="/dashboard">
                     <DropdownMenuItem className="hover:bg-purple-900/20 hover:text-white cursor-pointer">
                       <LayoutDashboard className="h-4 w-4 mr-2" />
                       Dashboard
