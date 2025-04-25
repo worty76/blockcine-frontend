@@ -37,7 +37,7 @@ export default function Sidebar({ isOpen, toggleSidebar }: SidebarProps) {
           <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-purple-500 to-cyan-500 flex items-center justify-center">
             <Film className="h-5 w-5 text-white" />
           </div>
-          <span className="font-bold text-white">BookApp Admin</span>
+          <span className="font-bold text-white">BlockCine Admin</span>
         </div>
         <Button
           variant="ghost"
