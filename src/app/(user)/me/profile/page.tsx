@@ -264,7 +264,7 @@ export default function ProfilePage() {
 
       // Update the reservation with blockchain verification
       const response = await fetch(
-        `http://localhost:5000/api/reservation/payment/${ticketId}`,
+        `http://localhost:5000/api/reservations/payment/${ticketId}`,
         {
           method: "POST",
           headers: {
